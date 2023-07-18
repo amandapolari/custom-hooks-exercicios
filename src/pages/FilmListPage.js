@@ -1,22 +1,9 @@
-import { useState, useEffect } from 'react';
-import { BASE_URL } from '../constants/constants';
-import axios from 'axios';
 import { Title, PostContainer } from './style';
 import { Card } from '../components/Card/Card';
+import useGetFilms from '../hooks/useGetFilms';
 
 const FilmListPage = () => {
-    const [filmsList, setFilmsList] = useState([]);
-
-    useEffect(() => {
-        axios
-            .get(`${BASE_URL}/films`)
-            .then((response) => {
-                setFilmsList(response.data.results);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+    const filmsList = useGetFilms();
 
     return (
         <div>
