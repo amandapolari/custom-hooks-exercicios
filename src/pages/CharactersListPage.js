@@ -3,7 +3,7 @@ import { Card } from '../components/Card/Card';
 import useRequestData from '../hooks/useRequestData';
 
 const CharactersListPage = () => {
-    const caractersList = useRequestData('/people');
+    const [caractersList] = useRequestData('/people');
     return (
         <div>
             <Title>Nomes dos Personagens</Title>

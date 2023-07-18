@@ -3,7 +3,7 @@ import { Card } from '../components/Card/Card';
 import useRequestData from '../hooks/useRequestData';
 
 const FilmListPage = () => {
-    const filmsList = useRequestData('/films');
+    const [filmsList] = useRequestData('/films');
 
     return (
         <div>

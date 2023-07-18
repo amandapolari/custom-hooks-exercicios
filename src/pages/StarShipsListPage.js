@@ -3,7 +3,7 @@ import { Card } from '../components/Card/Card';
 import useRequestData from '../hooks/useRequestData';
 
 const StarShipsListPage = () => {
-    const starShipsList = useRequestData('/starships');
+    const [starShipsList] = useRequestData('/starships');
     return (
         <div>
             <Title>Título das Naves</Title>
