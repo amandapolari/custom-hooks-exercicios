@@ -187,4 +187,50 @@ Atualize o **useRequestData** do exercício anterior:
     ```
 2. Em seguida apliquei a lógica necessário dos acontecimentos que deveriam ocorrer em `isLoading` e `isError`. As modificações de **isLoading estão nas setas amarelas** e as modificações de **isError estão nas setas verdes**
 
-![Alt text](image-2.png)
+    ![Alt text](image-2.png)
+
+3. Em `components` criei dois arquivos, chamados `Loading.js` e `Error.js` para que sejam chamados nas páginas quando necessário, ao invés de apenas escrever um texto nas condicionais das páginas
+
+4. Dentro desses dois componentes fiz a lógica necessária para renderizar um gif e uma mensagem em cada situação
+
+5. Em cada uma das páginas chamei os estados do hook `useRequestData`, e criei uma condicional dentro de outra condicional para lidar com o carregamento e o erro:
+
+-   Em `CharactersListPage.js`:
+    ```
+    (...)
+    const [caractersList, isLoading, isError] = useRequestData('/people');
+    (...)
+            {isError ? (
+            <Error />
+        ) : isLoading ? (
+            <Loading />
+        ) : (
+            caractersList.map
+    (...)
+    ```
+-   Em `FilmListPage.js`:
+    ```
+    (...)
+    const [filmsList, isLoading, isError] = useRequestData('/films');
+    (...)
+            {isError ? (
+            <Error />
+        ) : isLoading ? (
+            <Loading />
+        ) : (
+            filmsList.map
+    (...)
+    ```
+-   Em `StarShipsListPage.js`:
+    ```
+    (...)
+    const [starShipsList, isLoading, isError] = useRequestData('/starships');
+    (...)
+            {isError ? (
+            <Error />
+        ) : isLoading ? (
+            <Loading />
+        ) : (
+            starShipsList.map
+    (...)
+    ```

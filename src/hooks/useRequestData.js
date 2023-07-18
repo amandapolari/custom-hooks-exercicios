@@ -17,6 +17,7 @@ const useRequestData = (path) => {
             })
             .catch((error) => {
                 console.log(error);
+                setIsLoading(false);
                 setIsError(true);
             });
     }, []);
