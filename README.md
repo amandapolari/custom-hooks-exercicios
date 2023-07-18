@@ -179,3 +179,12 @@ Atualize o **useRequestData** do exercício anterior:
 -   Utilize o nome "isLoading" como variável de estado.
 
 ### Resolução
+
+1. Em `useRequestData.js` criei um estado para o login e outro para o erro, onde login inicia com true e login com false:
+    ```
+    const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
+    ```
+2. Em seguida apliquei a lógica necessário dos acontecimentos que deveriam ocorrer em `isLoading` e `isError`. As modificações de **isLoading estão nas setas amarelas** e as modificações de **isError estão nas setas verdes**
+
+![Alt text](image-2.png)
