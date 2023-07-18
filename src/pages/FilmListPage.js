@@ -1,9 +1,9 @@
 import { Title, PostContainer } from './style';
 import { Card } from '../components/Card/Card';
-import useGetFilms from '../hooks/useGetFilms';
+import useRequestData from '../hooks/useRequestData';
 
 const FilmListPage = () => {
-    const filmsList = useGetFilms();
+    const filmsList = useRequestData('/films');
 
     return (
         <div>

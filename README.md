@@ -117,6 +117,57 @@ Em `src` criei a pasta `hooks` e dentro dela criei três arquivos, cada uma com 
 
 ### Resolução
 
+-   Em `hooks`, criei o arquivo `useRequestData.js` e dentro dele uma função:
+
+    ```
+    const useRequestData = () => {
+
+    };
+    export default useRequestData;
+    ```
+
+-   Utilizando como exemplo o hook `useGetFilms` adaptei seu código para torna-lo utilizável em todas as três páginas, as adaptações feitas estão identificadas pelas setas na imagem:
+    ![Alt text](image-1.png)
+
+-   Em seguida chamei o novo hook `useRequestData` em todos as páginas substituindo os hooks anteriormente criados:
+
+    -   Chamando o hook `useRequestData` em `FilmListPage.js`:
+        -   Importei:
+            ```
+            import useRequestData from '../hooks/useRequestData';
+            ```
+        -   Chamei:
+            ```
+            const filmsList = useRequestData('/films');
+            ```
+    -   Chamando o hook `useRequestData` em `CharactersListPage.js`:
+
+        -   Importei:
+
+            ```
+            import useRequestData from '../hooks/useRequestData';
+            ```
+
+        -   Chamei:
+
+            ```
+            const caractersList = useRequestData('/people');
+            ```
+
+    -   Chamando o hook `useRequestData` em `StarShipsListPage.js`:
+
+        -   Importei:
+
+            ```
+            import useRequestData from '../hooks/useRequestData';
+            ```
+
+        -   Chamei:
+
+            ```
+            const starShipsList = useRequestData('/starships');
+            ```
+
 ## Exercício 3
 
 ### Enunciado

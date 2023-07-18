@@ -1,9 +1,9 @@
 import { Title, PostContainer } from './style';
 import { Card } from '../components/Card/Card';
-import useGetStartShips from '../hooks/useGetStarShips';
+import useRequestData from '../hooks/useRequestData';
 
 const StarShipsListPage = () => {
-    const starShipsList = useGetStartShips();
+    const starShipsList = useRequestData('/starships');
     return (
         <div>
             <Title>Título das Naves</Title>

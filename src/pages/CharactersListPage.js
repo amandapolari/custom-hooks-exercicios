@@ -1,9 +1,9 @@
 import { Title, NameContainer } from './style';
 import { Card } from '../components/Card/Card';
-import useGetCharacter from '../hooks/useGetCharacter';
+import useRequestData from '../hooks/useRequestData';
 
 const CharactersListPage = () => {
-    const caractersList = useGetCharacter();
+    const caractersList = useRequestData('/people');
     return (
         <div>
             <Title>Nomes dos Personagens</Title>
