@@ -1,38 +1,32 @@
-import { useState, useEffect } from 'react';
-import { BASE_URL } from '../constants/constants';
-import axios from 'axios';
 import { Title, PostContainer } from './style';
 import { Card } from '../components/Card/Card';
+import useRequestData from '../hooks/useRequestData';
+import Loading from '../components/Loading/Loading';
+import Error from '../components/Error/Error';
 
 const StarShipsListPage = () => {
-    const [starShipsList, setStarShipsList] = useState([]);
-
-    useEffect(() => {
-        axios
-            .get(`${BASE_URL}/starships`)
-            .then((response) => {
-                setStarShipsList(response.data.results);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
-
+    const [starShipsList, isLoading, isError] = useRequestData('/starships');
     return (
         <div>
             <Title>Título das Naves</Title>
             <PostContainer>
-                {starShipsList.map((starShip) => {
-                    return (
-                        <Card
-                            key={starShip.name}
-                            title={starShip.name}
-                            text={starShip.manufacturer}
-                            backgroudColor={'gray'}
-                            textColor={'#ffffff'}
-                        />
-                    );
-                })}
+                {isError ? (
+                    <Error />
+                ) : isLoading ? (
+                    <Loading />
+                ) : (
+                    starShipsList.map((starShip) => {
+                        return (
+                            <Card
+                                key={starShip.name}
+                                title={starShip.name}
+                                text={starShip.manufacturer}
+                                backgroudColor={'gray'}
+                                textColor={'#ffffff'}
+                            />
+                        );
+                    })
+                )}
             </PostContainer>
         </div>
     );

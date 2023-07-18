@@ -25,6 +25,90 @@ Extraia a lógica das requisições já existente no template e construa três c
 
 ### Resolução
 
+Em `src` criei a pasta `hooks` e dentro dela criei três arquivos, cada uma com o nome da função que eu irei criar dentro delas:
+![Alt text](image.png)
+
+-   Construindo o hook `useGetFilms`:
+
+    -   Construi uma função `useGetFilms` e exportei:
+
+        ```
+        const useGetFilms = () => {
+
+        };
+        export default useGetFilms;
+        ```
+
+    -   Copiei a lógica de `FilmListPage.js` e coloquei dentro da função anterior fazendo as adaptações necessárias, dessa forma `useGetFilms.js` fica da seguinte maneira:
+
+        ```
+        import axios from 'axios';
+        import { useEffect, useState } from 'react';
+        import { BASE_URL } from '../constants/constants';
+
+        const useGetFilms = () => {
+            const [filmsList, setFilmsList] = useState([]);
+
+            useEffect(() => {
+                axios
+                    .get(`${BASE_URL}/films`)
+                    .then((response) => {
+                        setFilmsList(response.data.results);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }, []);
+            return filmsList;
+        };
+        export default useGetFilms;
+        ```
+
+-   Adaptando o hook `useGetFilms` dentro do arquivo `FilmListPage.js`:
+
+    -   Preciso importar o hook `useGetFilmes`
+        ```
+        import useGetFilms from '../hooks/useGetFilms';
+        ```
+    -   Criei uma variável com o mesmo nome do array que estava sendo renderizado pelo map no jsx e o seu valor é o hook importado:
+        ```
+        const filmsList = useGetFilms();
+        ```
+    -   Dessa forma o `FilmListPage.js` fica da seguinte maneira:
+
+        ```
+        import { Title, PostContainer } from './style';
+        import { Card } from '../components/Card/Card';
+        import useGetFilms from '../hooks/useGetFilms';
+
+        const FilmListPage = () => {
+            const filmsList = useGetFilms();
+
+            return (
+                <div>
+                    <Title>Título dos filmes</Title>
+                    <PostContainer>
+                        {filmsList.map((film) => {
+                            return (
+                                <Card
+                                    key={film.title}
+                                    title={film.title}
+                                    text={film.opening_crawl}
+                                    backgroudColor={'gray'}
+                                    textColor={'#ffffff'}
+                                />
+                            );
+                        })}
+                    </PostContainer>
+                </div>
+            );
+        };
+
+        export default FilmListPage;
+        ```
+
+-   Fiz exatamente o mesmo procedimento para cada um dos novos hooks que criei e a adaptação nas suas respectivas páginas.
+
 ## Exercício 2
 
 ### Enunciado
@@ -32,6 +116,57 @@ Extraia a lógica das requisições já existente no template e construa três c
 -   Utilize o exemplo do **useRequestData do material assíncrono** e reorganize o código do exercício 1, de modo a permitir a reutilização da lógica para todas as requisições projeto.
 
 ### Resolução
+
+-   Em `hooks`, criei o arquivo `useRequestData.js` e dentro dele uma função:
+
+    ```
+    const useRequestData = () => {
+
+    };
+    export default useRequestData;
+    ```
+
+-   Utilizando como exemplo o hook `useGetFilms` adaptei seu código para torna-lo utilizável em todas as três páginas, as adaptações feitas estão identificadas pelas setas na imagem:
+    ![Alt text](image-1.png)
+
+-   Em seguida chamei o novo hook `useRequestData` em todos as páginas substituindo os hooks anteriormente criados:
+
+    -   Chamando o hook `useRequestData` em `FilmListPage.js`:
+        -   Importei:
+            ```
+            import useRequestData from '../hooks/useRequestData';
+            ```
+        -   Chamei:
+            ```
+            const filmsList = useRequestData('/films');
+            ```
+    -   Chamando o hook `useRequestData` em `CharactersListPage.js`:
+
+        -   Importei:
+
+            ```
+            import useRequestData from '../hooks/useRequestData';
+            ```
+
+        -   Chamei:
+
+            ```
+            const caractersList = useRequestData('/people');
+            ```
+
+    -   Chamando o hook `useRequestData` em `StarShipsListPage.js`:
+
+        -   Importei:
+
+            ```
+            import useRequestData from '../hooks/useRequestData';
+            ```
+
+        -   Chamei:
+
+            ```
+            const starShipsList = useRequestData('/starships');
+            ```
 
 ## Exercício 3
 
@@ -44,3 +179,58 @@ Atualize o **useRequestData** do exercício anterior:
 -   Utilize o nome "isLoading" como variável de estado.
 
 ### Resolução
+
+1. Em `useRequestData.js` criei um estado para o login e outro para o erro, onde login inicia com true e login com false:
+    ```
+    const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
+    ```
+2. Em seguida apliquei a lógica necessário dos acontecimentos que deveriam ocorrer em `isLoading` e `isError`. As modificações de **isLoading estão nas setas amarelas** e as modificações de **isError estão nas setas verdes**
+
+    ![Alt text](image-2.png)
+
+3. Em `components` criei dois arquivos, chamados `Loading.js` e `Error.js` para que sejam chamados nas páginas quando necessário, ao invés de apenas escrever um texto nas condicionais das páginas
+
+4. Dentro desses dois componentes fiz a lógica necessária para renderizar um gif e uma mensagem em cada situação
+
+5. Em cada uma das páginas chamei os estados do hook `useRequestData`, e criei uma condicional dentro de outra condicional para lidar com o carregamento e o erro:
+
+-   Em `CharactersListPage.js`:
+    ```
+    (...)
+    const [caractersList, isLoading, isError] = useRequestData('/people');
+    (...)
+            {isError ? (
+            <Error />
+        ) : isLoading ? (
+            <Loading />
+        ) : (
+            caractersList.map
+    (...)
+    ```
+-   Em `FilmListPage.js`:
+    ```
+    (...)
+    const [filmsList, isLoading, isError] = useRequestData('/films');
+    (...)
+            {isError ? (
+            <Error />
+        ) : isLoading ? (
+            <Loading />
+        ) : (
+            filmsList.map
+    (...)
+    ```
+-   Em `StarShipsListPage.js`:
+    ```
+    (...)
+    const [starShipsList, isLoading, isError] = useRequestData('/starships');
+    (...)
+            {isError ? (
+            <Error />
+        ) : isLoading ? (
+            <Loading />
+        ) : (
+            starShipsList.map
+    (...)
+    ```
