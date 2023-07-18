@@ -1,11 +1,11 @@
 export const goToCharactersListPage = (navigate) => {
-    navigate("/")
-}
+    navigate('/');
+};
 
 export const goToFilmsPage = (navigate) => {
-    navigate("/films")
-}
+    navigate('/films');
+};
 
 export const goToStarShipsPage = (navigate) => {
-    navigate("/starships")
-}
+    navigate('/starships');
+};
